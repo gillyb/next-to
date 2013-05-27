@@ -1,0 +1,72 @@
+<html>
+<head>
+	<title>jQuery nextTo plugin samples - A relative positioning plugin for jQuery</title>
+	<script src="https://ajax.googleapis.com/ajax/libs/jquery/1.7.1/jquery.min.js" type="text/javascript"></script>
+	<script src="../src/jquery.nextTo.js" type="text/javascript"></script>
+
+	<style>
+	* { margin:0px; padding:0; }
+	.ExampleBox { height:150px; width:300px; float:left; }
+	.Explanation { margin-top:150px; }
+	.BaseDiv { width:70px; height:30px; background-color:Red; }
+	.LooseDiv { width:200px; height:100px; background-color:Blue; }
+	.Clear { clear:both; }
+	</style>
+
+</head>
+<body style="margin:20px;">
+
+	<script type="text/javascript">
+		$(function () {
+			$('.Box1 .LooseDiv').nextTo($('.Box1 .BaseDiv'), { position: 'right', shareBorder: 'top' });
+
+			$('.Box2 .LooseDiv').nextTo($('.Box2 .BaseDiv'), { position: 'bottom', shareBorder: 'left' });
+
+			$('.Box3 .LooseDiv').nextTo($('.Box3 .BaseDiv'), { position: 'bottom', shareBorder: 'right', offsetY:2 });
+
+			$('.Box4 .LooseDiv').nextTo($('.Box4 .BaseDiv'), { position: 'left', shareBorder: 'top', offsetX:-2 });
+		});
+	</script>
+
+	<div class="ExampleBox Box1">
+	
+		<div class="BaseDiv"></div>
+		<div class="LooseDiv"></div>
+
+		<div class="Explanation">
+			position: 'right', shareBorder: 'top'
+		</div>
+	</div>
+	
+	<div class="ExampleBox Box2">
+	
+		<div class="BaseDiv"></div>
+		<div class="LooseDiv"></div>
+
+		<div class="Explanation">
+			position: 'bottom', shareBorder: 'left'
+		</div>
+	</div>
+
+	<div class="ExampleBox Box3">
+	
+		<div class="BaseDiv" style="float:right;"></div>
+		<div class="LooseDiv"></div>
+
+		<div class="Explanation">
+			position: 'bottom', shareBorder: 'right', offsetY:2
+		</div>
+	</div>
+
+	<div class="ExampleBox Box4" style="margin-left:100px;">
+	
+		<div class="BaseDiv" style="float:right;"></div>
+		<div class="LooseDiv"></div>
+
+		<div class="Explanation">
+			position: 'left', shareBorder: 'top', offsetX:-2
+		</div>
+	</div>
+
+</body>
+</html>
