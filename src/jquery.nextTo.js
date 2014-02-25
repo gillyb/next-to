@@ -18,9 +18,9 @@
             }
 
         // general position
-        switch(settings.position) {
+        switch (settings.position) {
             case 'bottom':
-                css.top = baseOffset.top + baseElement.outerHeight();
+				css.top = baseOffset.top + baseElement.outerHeight();
                 break;
             case 'top':
                 css.top = baseOffset.top - looseElement.outerHeight();
@@ -36,7 +36,7 @@
         }
 
         // align border
-        switch(settings.shareBorder) {
+        switch (settings.shareBorder) {
             case 'right':
                 css.left = baseOffset.left - (looseElement.outerWidth() - baseElement.outerWidth());
                 break;
