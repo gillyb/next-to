@@ -1,42 +1,63 @@
 (function ($) {
-	$.fn.nextTo = function (baseElement, options) {
-		if (this.length == 0) return false;
+    $.fn.nextTo = function (baseElement, options) {
+        if (this.length == 0) return false;
 
-		var settings = $.extend({
-			position: 'bottom', // bottom/top/right/left
-			shareBorder: 'right', // bottom/top/right/left
-			offsetX: 0,
-			offsetY: 0
-		}, options || {});
+        var settings = $.extend({
+            position: 'bottom', // bottom/top/right/left
+            shareBorder: 'right', // bottom/top/right/left
+            offsetX: 0,
+            offsetY: 0
+        }, options || {});
 
-		var looseElement = this;
-		var baseOffset = baseElement.offset();
-		var looseOffset = looseElement.offset();
+        var looseElement = this,
+            baseOffset = baseElement.offset(),
+            css = {
+                position: 'absolute',
+                top: 0,
+                left: 0
+            }
 
-		looseElement.css('position', 'absolute');
-		
-		// general position
-		if (settings.position == 'bottom')
-			looseElement.css('top', (baseOffset.top + baseElement.outerHeight()) + 'px');
-		else if (settings.position == 'top')
-			looseElement.css('top', (baseOffset.top - looseElement.outerHeight()) + 'px');
-		else if (settings.position == 'right')
-			looseElement.css('left', (baseOffset.left + baseElement.outerWidth()) + 'px');
-		else if (settings.position == 'left')
-			looseElement.css('left', (baseOffset.left - looseElement.outerWidth()) + 'px');
+        // general position
+        switch(settings.position) {
+            case 'bottom':
+                css.top = baseOffset.top + baseElement.outerHeight();
+                break;
+            case 'top':
+                css.top = baseOffset.top - looseElement.outerHeight();
+                break;
+            case 'right':
+                css.left = baseOffset.left + baseElement.outerWidth();
+                break;
+            case 'left':
+                css.left = baseOffset.left - looseElement.outerWidth();
+                break;
+            default:
+                throw 'Invalid "position" value passed to nextTo(): ' + settings.position;
+        }
 
-		// align border
-		if (settings.shareBorder == 'right')
-			looseElement.css('left', baseOffset.left - (looseElement.outerWidth() - baseElement.outerWidth()) + 'px');
-		else if (settings.shareBorder == 'left')
-			looseElement.css('left', baseOffset.left + 'px');
-		else if (settings.shareBorder == 'top')
-			looseElement.css('top', baseOffset.top + 'px');
-		else if (settings.shareBorder == 'bottom')
-			looseElement.css('top', baseOffset.top - (looseElement.outerHeight() - baseElement.outerHeight()) + 'px');
+        // align border
+        switch(settings.shareBorder) {
+            case 'right':
+                css.left = baseOffset.left - (looseElement.outerWidth() - baseElement.outerWidth());
+                break;
+            case 'left':
+                css.left = baseOffset.left;
+                break;
+            case 'top':
+                css.top = baseOffset.top;
+                break;
+            case 'bottom':
+                css.top = baseOffset.top - (looseElement.outerHeight() - baseElement.outerHeight());
+                break;
+            default:
+                throw 'Invalid "shareBorder" value passed to nextTo(): ' + settings.position;
+        }
 
-		// add offset
-		looseElement.css('left', (parseInt(looseElement.css('left').replace('px', '')) + settings.offsetX) + 'px');
-		looseElement.css('top', (parseInt(looseElement.css('top').replace('px', '')) + settings.offsetY) + 'px');
-	};
+        // add offset
+        css.left += settings.offsetX;
+        css.top += settings.offsetY;
+
+        //Actually change css
+        looseElement.css(css);
+    };
 })(jQuery)
