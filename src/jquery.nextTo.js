@@ -53,6 +53,11 @@
 				throw 'Invalid "shareBorder" value passed to nextTo(): ' + settings.position;
 		}
 
+		//Handle offset parent
+		var parentOffset = looseElement.offsetParent().offset();
+		css.left -= parentOffset.left;
+		css.top -= parentOffset.top;
+
 		// add offset
 		css.left += settings.offsetX;
 		css.top += settings.offsetY;
